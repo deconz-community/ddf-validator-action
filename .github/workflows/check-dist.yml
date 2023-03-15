@@ -18,19 +18,23 @@ on:
 
 jobs:
   check-dist:
+    name: Check dist
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-      with:
-        version: 7
+      - name: Checkout Repo
+        uses: actions/checkout@v3
 
-      - name: Set Node.js 16.x
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
-          cache: 'pnpm'
+          node-version: 16
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
 
       - name: Install dependencies
         run: pnpm install
