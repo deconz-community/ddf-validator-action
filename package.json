@@ -1,5 +1,5 @@
 {
-  "name": "typescript-action",
+  "name": "ddf-validator-action",
   "version": "0.0.0",
   "private": true,
   "description": "TypeScript template action",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/deconz-community/ddf-validator-action.git"
   },
   "keywords": [
     "actions",
@@ -25,7 +25,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.10.0"
+    "@actions/core": "^1.10.0",
+    "@deconz-community/ddf-validator": "^0.2.1"
   },
   "devDependencies": {
     "@types/node": "^18.11.0",
