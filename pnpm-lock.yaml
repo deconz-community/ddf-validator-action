@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@actions/core': ^1.10.0
   '@deconz-community/ddf-validator': ^0.2.1
+  '@jest/globals': ^29.5.0
   '@types/node': ^18.15.3
   '@typescript-eslint/parser': ^5.55.0
   '@vercel/ncc': ^0.36.1
@@ -21,6 +22,7 @@ dependencies:
   '@deconz-community/ddf-validator': 0.2.1
 
 devDependencies:
+  '@jest/globals': 29.5.0
   '@types/node': 18.15.3
   '@typescript-eslint/parser': 5.55.0_vgl77cfdswitgr47lm5swmv43m
   '@vercel/ncc': 0.36.1
