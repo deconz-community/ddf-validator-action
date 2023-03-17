@@ -1,6 +1,9 @@
 name: 'DDF Validator action'
 description: 'Validate all DDf in directory.'
 author: 'Zehir'
+branding:
+  icon: 'check'
+  color: 'green'
 inputs:
   directory:
     required: true
