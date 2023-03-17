@@ -4,7 +4,7 @@ specifiers:
   '@actions/core': ^1.10.0
   '@antfu/eslint-config': ^0.36.0
   '@changesets/cli': ^2.26.0
-  '@deconz-community/ddf-validator': ^1.0.0
+  '@deconz-community/ddf-validator': ^1.2.0
   '@types/node': ^18.15.3
   '@typescript-eslint/eslint-plugin': ^5.55.0
   '@typescript-eslint/parser': ^5.55.0
@@ -20,7 +20,7 @@ specifiers:
 
 dependencies:
   '@actions/core': 1.10.0
-  '@deconz-community/ddf-validator': 1.0.0
+  '@deconz-community/ddf-validator': 1.2.0
   glob: 9.3.0
   zod: 3.21.4
   zod-validation-error: 1.0.1_zod@3.21.4
@@ -370,8 +370,8 @@ packages:
       prettier: 2.8.4
     dev: true
 
-  /@deconz-community/ddf-validator/1.0.0:
-    resolution: {integrity: sha512-9Rr3JejK9vnMo2Z1wpxU2Hxj8nZ1IUpLIR5pH1/WgAa1nRZjUxm/vwWbkNCA3dgqGyCNJh/tP3Vi+9DmUcu1PA==}
+  /@deconz-community/ddf-validator/1.2.0:
+    resolution: {integrity: sha512-0rc7/F/prA2ec5ZW/x9g93uZAhxmhqMPekVqpzE4dWc5PjpILsHn5SEc4jDs+KCkzrz0F9gE6hsYshN6e1fPkw==}
     dependencies:
       zod: 3.21.4
     dev: false
