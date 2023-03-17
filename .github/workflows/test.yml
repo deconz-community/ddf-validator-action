@@ -39,4 +39,3 @@ jobs:
       - uses: ./
         with:
           directory: 'tests'
-          search: '*.json'
