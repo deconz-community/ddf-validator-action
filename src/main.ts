@@ -1,18 +1,51 @@
+import { readFile } from 'node:fs/promises'
 import * as core from '@actions/core'
-import {wait} from './wait'
+import glob from 'glob'
+import { fromZodError } from 'zod-validation-error'
+import { validate } from '@deconz-community/ddf-validator'
+import { ZodError } from 'zod'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    const inputDirectory = `${core.getInput('directory')}/${core.getInput('search')}`
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    core.info(`Looking for files in ${inputDirectory}`)
 
-    core.setOutput('time', new Date().toTimeString())
-  } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message)
+    const inputFiles = await glob(inputDirectory, {
+      ignore: core.getInput('ignore'),
+    })
+
+    if (inputFiles.length === 0)
+      throw new Error('No files found. Please check the settings.')
+
+    core.info(`Found ${inputFiles.length} files to valiate.`)
+
+    let errorCount = 0
+    for (const file of inputFiles) {
+      const data = await readFile(file, 'utf-8')
+      const decoded = JSON.parse(data)
+      try {
+        validate(decoded)
+      }
+      catch (error) {
+        errorCount++
+        if (error instanceof ZodError)
+          core.error(fromZodError(error).message)
+        else if (error instanceof Error)
+          core.error(error.message)
+        else
+          core.error('Unknown Error')
+      }
+    }
+
+    if (errorCount > 0)
+      core.setFailed(`Found ${errorCount} invalid files. Check logs for details.`)
+    else
+      core.info('All files passed.')
+  }
+  catch (error) {
+    if (error instanceof Error)
+      core.setFailed(error.message)
   }
 }
 
