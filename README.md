@@ -20,5 +20,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: deconz-community/ddf-validator-action@v1
         with:
-          directory: /tests
+          directory: devices
+          search: '**/*.json'
+          ignore: '**/generic/**'
 ```

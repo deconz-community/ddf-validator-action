@@ -12,7 +12,6 @@ inputs:
   ignore:
     required: false
     description: 'ignore files that match this pattern'
-    default: '**/generic/**'
 runs:
   using: 'node16'
   main: 'dist/index.js'
