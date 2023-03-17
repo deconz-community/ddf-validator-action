@@ -39,3 +39,4 @@ jobs:
       - uses: ./
         with:
           directory: '/tests'
+          default: '*.json'
