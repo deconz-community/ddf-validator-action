@@ -61,9 +61,9 @@ function run() {
             core.info(`Found ${inputFiles.length} files to valiate.`);
             let errorCount = 0;
             for (const file of inputFiles) {
-                const data = yield (0, promises_1.readFile)(file, 'utf-8');
-                const decoded = JSON.parse(data);
                 try {
+                    const data = yield (0, promises_1.readFile)(file, 'utf-8');
+                    const decoded = JSON.parse(data);
                     (0, ddf_validator_1.validate)(decoded);
                 }
                 catch (error) {

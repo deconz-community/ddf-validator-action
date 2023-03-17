@@ -22,9 +22,9 @@ async function run(): Promise<void> {
 
     let errorCount = 0
     for (const file of inputFiles) {
-      const data = await readFile(file, 'utf-8')
-      const decoded = JSON.parse(data)
       try {
+        const data = await readFile(file, 'utf-8')
+        const decoded = JSON.parse(data)
         validate(decoded)
       }
       catch (error) {
