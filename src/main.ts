@@ -30,7 +30,7 @@ async function run(): Promise<void> {
       catch (error) {
         errorCount++
         if (error instanceof ZodError)
-          core.error(fromZodError(error).message)
+          core.error(`${file}:${fromZodError(error).message}`)
         else if (error instanceof Error)
           core.error(error.message)
         else
