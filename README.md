@@ -21,6 +21,7 @@ jobs:
       - uses: deconz-community/ddf-validator-action@v1
         with:
           directory: devices
+          generic: devices/generic
           search: '**/*.json'
           ignore: '**/generic/**'
 ```
