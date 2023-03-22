@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.0.0
+
+### Major Changes
+
+- 66cea6b: Initial release
+
 ## 1.0.4
 
 ### Patch Changes
