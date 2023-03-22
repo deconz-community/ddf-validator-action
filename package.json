@@ -10,7 +10,7 @@
     "package": "ncc build --source-map --license licenses.txt",
     "up": "taze major -I",
     "all": "pnpm run build && pnpm run lint && pnpm run package",
-    "release": "pnpm run all && changeset publish"
+    "release": "pnpm run all && changeset tag && changeset publish"
   },
   "repository": {
     "type": "git",
