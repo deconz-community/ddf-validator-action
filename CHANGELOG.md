@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.0.2
+
+### Patch Changes
+
+- 153d362: Trigger update
+
 ## 1.0.1
 
 ### Patch Changes
