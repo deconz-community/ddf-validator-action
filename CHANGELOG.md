@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.1.0
+
+### Minor Changes
+
+- db6cf26: Update ddf-validator to 1.3.0
+
 ## 1.0.0
 
 ### Major Changes
