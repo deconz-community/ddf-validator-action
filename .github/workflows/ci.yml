@@ -40,9 +40,6 @@ jobs:
         with:
           directory: 'tests'
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-          
       - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@v1
