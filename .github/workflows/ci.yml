@@ -54,4 +54,4 @@ jobs:
         if: steps.changesets.outputs.published == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ steps.changesets.outputs.publishedPackages[0].version }}
+          tag_name: ${{ fromJSON(steps.changesets.outputs.publishedPackages)[0].version }}
