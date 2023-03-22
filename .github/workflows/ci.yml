@@ -52,5 +52,7 @@ jobs:
       - name: Update Release tags
         uses: JasonEtco/build-and-tag-action@v2
         if: steps.changesets.outcome == 'success' && steps.changesets.outputs.published == 'true'
+        with:
+          tag_name: ${{ format('v{0}', fromJSON(steps.changesets.outputs.publishedPackages)[0].version) }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
