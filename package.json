@@ -1,6 +1,6 @@
 {
   "name": "@deconz-community/ddf-validator-action",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "description": "Github action for validating DDF files for deconz",
   "keywords": [

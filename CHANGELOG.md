@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.0.3
+
+### Patch Changes
+
+- 86dc69b: fix release workflow
+
 ## 1.0.2
 
 ### Patch Changes
