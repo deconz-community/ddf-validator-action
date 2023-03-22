@@ -1,6 +1,6 @@
 {
   "name": "@deconz-community/ddf-validator-action",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "description": "Github action for validating DDF files for deconz",
   "keywords": [
@@ -12,11 +12,11 @@
   ],
   "homepage": "https://github.com/deconz-community/ddf-validator-action/",
   "bugs": {
-      "url": "https://github.com/deconz-community/ddf-validator-action/issues/"
+    "url": "https://github.com/deconz-community/ddf-validator-action/issues/"
   },
   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/deconz-community/ddf-validator-action.git"
+    "type": "git",
+    "url": "git+https://github.com/deconz-community/ddf-validator-action.git"
   },
   "license": "MIT",
   "author": {
