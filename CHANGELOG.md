@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.0.4
+
+### Patch Changes
+
+- 488724d: fix workflow again
+
 ## 1.0.3
 
 ### Patch Changes
