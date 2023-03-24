@@ -39,8 +39,8 @@ async function run(): Promise<void> {
       }
     }
 
-    core.info(`Loaded ${genericDirectory.length - genericErrorCount} files.`)
-    if(genericErrorCount>0){
+    core.info(`Loaded ${genericFiles.length - genericErrorCount} files.`)
+    if(genericErrorCount > 0){
       core.warning(`${genericErrorCount} files was not loaded because of errors.`)
     }
     
