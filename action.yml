@@ -11,6 +11,7 @@ inputs:
   generic:
     required: false
     description: 'input directory of Generic files, will look for a 'generic' folder if ommited'
+    default: ''
   search:
     required: false
     description: 'input search pattern'
