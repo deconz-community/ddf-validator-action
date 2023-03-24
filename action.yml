@@ -10,8 +10,7 @@ inputs:
     description: 'input directory of DDF files'
   generic:
     required: false
-    description: 'input directory of Generic files, will look for a 'generic' folder if ommited'
-    default: ''
+    description: 'input directory of Generic files, will look for a "generic" folder in main directory if ommited'
   search:
     required: false
     description: 'input search pattern'

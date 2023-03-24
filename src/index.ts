@@ -11,7 +11,9 @@ async function run(): Promise<void> {
 
     // Load generic files
     let genericErrorCount = 0
-    const genericDirectory = `${core.getInput('generic')}/${core.getInput('search')}`
+    const genericDirectory = core.getInput('generic')
+      ? `${core.getInput('generic')}/${core.getInput('search')}`
+      : `${core.getInput('directory')}/generic/${core.getInput('search')}`
 
     core.info(`Loading generic files from ${genericDirectory}`)
 
