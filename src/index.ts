@@ -2,33 +2,32 @@ import { readFile } from 'node:fs/promises'
 import * as core from '@actions/core'
 import glob from 'glob'
 import { fromZodError } from 'zod-validation-error'
-import { validate } from '@deconz-community/ddf-validator'
+import { createValidator } from '@deconz-community/ddf-validator'
 import { ZodError } from 'zod'
 
 async function run(): Promise<void> {
   try {
-    const inputDirectory = `${core.getInput('directory')}/${core.getInput('search')}`
+    const validator = createValidator()
 
-    core.info(`Looking for files in ${inputDirectory}`)
+    // Load generic files
+    let genericErrorCount = 0
+    const genericDirectory = `${core.getInput('generic')}/${core.getInput('search')}`
 
-    const inputFiles = await glob(inputDirectory, {
-      ignore: core.getInput('ignore'),
-    })
+    core.info(`Loading generic files from ${genericDirectory}`)
 
-    if (inputFiles.length === 0)
-      throw new Error('No files found. Please check the settings.')
+    const genericFiles = await glob(genericDirectory)
 
-    core.info(`Found ${inputFiles.length} files to valiate.`)
+    if (genericFiles.length === 0)
+      throw new Error('No generic files found. Please check the settings.')
 
-    let errorCount = 0
-    for (const file of inputFiles) {
+    for (const file of genericFiles) {
       try {
         const data = await readFile(file, 'utf-8')
         const decoded = JSON.parse(data)
-        validate(decoded)
+        validator.loadGeneric(decoded)
       }
       catch (error) {
-        errorCount++
+        genericErrorCount++
         if (error instanceof ZodError)
           core.error(`${file}:${fromZodError(error).message}`)
         else if (error instanceof Error)
@@ -38,8 +37,45 @@ async function run(): Promise<void> {
       }
     }
 
-    if (errorCount > 0)
-      core.setFailed(`Found ${errorCount} invalid files. Check logs for details.`)
+    core.info(`Loaded ${genericDirectory.length - genericErrorCount} files.`)
+    if(genericErrorCount>0){
+      core.warning(`${genericErrorCount} files was not loaded because of errors.`)
+    }
+    
+    // Validate DDF files
+    let ddfErrorCount = 0
+    const ddfDirectory = `${core.getInput('directory')}/${core.getInput('search')}`
+
+    core.info(`Validating DDF files from ${ddfDirectory} (ignore: ${core.getInput('ignore')})`)
+
+    const inputFiles = await glob(ddfDirectory, {
+      ignore: core.getInput('ignore'),
+    })
+
+    if (inputFiles.length === 0)
+      throw new Error('No files found. Please check the settings.')
+
+    core.info(`Found ${inputFiles.length} files to valiate.`)
+
+    for (const file of inputFiles) {
+      try {
+        const data = await readFile(file, 'utf-8')
+        const decoded = JSON.parse(data)
+        validator.validate(decoded)
+      }
+      catch (error) {
+        ddfErrorCount++
+        if (error instanceof ZodError)
+          core.error(`${file}:${fromZodError(error).message}`)
+        else if (error instanceof Error)
+          core.error(error.message)
+        else
+          core.error('Unknown Error')
+      }
+    }
+
+    if ((genericErrorCount + ddfErrorCount) > 0)
+      core.setFailed(`Found ${genericErrorCount + ddfErrorCount} invalid files. Check logs for details.`)
     else
       core.info('All files passed.')
   }
