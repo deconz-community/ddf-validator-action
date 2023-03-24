@@ -1,5 +1,12 @@
 # @deconz-community/ddf-validator-action
 
+## 1.2.0
+
+### Minor Changes
+
+- d96c2d6: Update ddf-validator to 2.0.0
+- 093b1cd: add generic option
+
 ## 1.1.0
 
 ### Minor Changes
