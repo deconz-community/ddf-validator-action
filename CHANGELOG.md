@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.3.1
+
+### Patch Changes
+
+- 53294b0: Fix generic loading
+
 ## 1.3.0
 
 ### Minor Changes
