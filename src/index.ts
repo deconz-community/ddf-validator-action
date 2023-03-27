@@ -22,28 +22,59 @@ async function run(): Promise<void> {
     if (genericFiles.length === 0)
       throw new Error('No generic files found. Please check the settings.')
 
+    core.debug(`Found ${genericFiles.length} files.`)
+
+    // Load and sort files by schema
+    const genericDatas: Record<string, unknown[]> = {
+      'constants1.schema.json': [],
+      'resourceitem1.schema.json': [],
+      'subdevice1.schema.json': [],
+    }
+
     for (const file of genericFiles) {
+      core.debug(`Loading ${file}.`)
       try {
         const data = await readFile(file, 'utf-8')
         const decoded = JSON.parse(data)
-        validator.loadGeneric(decoded)
+        if (typeof decoded.schema === 'string' || genericDatas[decoded.schema] === undefined)
+          genericDatas[decoded.schema].push(decoded)
+        else
+          core.error(`${file}:Unknown schema ${decoded.schema}`)
       }
       catch (error) {
         genericErrorCount++
-        if (error instanceof ZodError)
-          core.error(`${file}:${fromZodError(error).message}`)
-        else if (error instanceof Error)
-          core.error(error.message)
+        if (error instanceof Error)
+          core.error(`${file}: ${error.message}`)
         else
-          core.error('Unknown Error')
+          core.error(`${file}: Unknown Error`)
+      }
+    }
+
+    // Validating files
+    for (const [domain, data] of Object.entries(genericDatas)) {
+      core.info(`Loading ${genericDatas[domain].length} files with schema "${domain}".`)
+      for (const file of data) {
+        core.debug(`Loading ${file}.`)
+
+        try {
+          validator.loadGeneric(data)
+        }
+        catch (error) {
+          genericErrorCount++
+          if (error instanceof ZodError)
+            core.error(`${file}:${fromZodError(error).message}`)
+          else if (error instanceof Error)
+            core.error(error.message)
+          else
+            core.error('Unknown Error')
+        }
       }
     }
 
     core.info(`Loaded ${genericFiles.length - genericErrorCount} files.`)
-    if(genericErrorCount > 0){
+    if (genericErrorCount > 0)
       core.warning(`${genericErrorCount} files was not loaded because of errors.`)
-    }
-    
+
     // Validate DDF files
     let ddfErrorCount = 0
     const ddfDirectory = `${core.getInput('directory')}/${core.getInput('search')}`
