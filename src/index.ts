@@ -17,52 +17,55 @@ async function run(): Promise<void> {
 
     core.info(`Loading generic files from ${genericDirectory}`)
 
-    const genericFiles = await glob(genericDirectory)
+    const genericFilePaths = await glob(genericDirectory)
 
-    if (genericFiles.length === 0)
+    if (genericFilePaths.length === 0)
       throw new Error('No generic files found. Please check the settings.')
 
-    core.debug(`Found ${genericFiles.length} files.`)
+    core.debug(`Found ${genericFilePaths.length} files.`)
 
     // Load and sort files by schema
-    const genericDatas: Record<string, unknown[]> = {
+    const genericfiles: Record<string, { path: string; data: unknown }[]> = {
       'constants1.schema.json': [],
       'resourceitem1.schema.json': [],
       'subdevice1.schema.json': [],
     }
 
-    for (const file of genericFiles) {
-      core.debug(`Loading ${file}.`)
+    for (const filePath of genericFilePaths) {
+      core.debug(`Loading ${filePath}.`)
       try {
-        const data = await readFile(file, 'utf-8')
+        const data = await readFile(filePath, 'utf-8')
         const decoded = JSON.parse(data)
-        if (typeof decoded.schema === 'string' || genericDatas[decoded.schema] === undefined)
-          genericDatas[decoded.schema].push(decoded)
-        else
-          core.error(`${file}:Unknown schema ${decoded.schema}`)
+        if (typeof decoded.schema === 'string' || genericfiles[decoded.schema] === undefined) {
+          genericfiles[decoded.schema].push({
+            path: filePath,
+            data: decoded,
+          })
+        }
+        else { core.error(`${filePath}:Unknown schema ${decoded.schema}`) }
       }
       catch (error) {
         genericErrorCount++
         if (error instanceof Error)
-          core.error(`${file}: ${error.message}`)
+          core.error(`${filePath}: ${error.message}`)
         else
-          core.error(`${file}: Unknown Error`)
+          core.error(`${filePath}: Unknown Error`)
       }
     }
 
     // Validating files
-    for (const [domain, data] of Object.entries(genericDatas)) {
-      core.info(`Loading ${genericDatas[domain].length} files with schema "${domain}".`)
-      for (const file of data) {
-        core.debug(`Loading ${file}.`)
-
+    for (const [domain, files] of Object.entries(genericfiles)) {
+      core.info(`Loading ${genericfiles[domain].length} files with schema "${domain}".`)
+      for (const file of files) {
+        core.debug(`Validating ${file.path}...`)
         try {
-          validator.loadGeneric(data)
+          validator.loadGeneric(file.data)
+          core.debug(`Validating ${file.path}. OK`)
         }
         catch (error) {
           genericErrorCount++
           if (error instanceof ZodError)
-            core.error(`${file}:${fromZodError(error).message}`)
+            core.error(`${file.path}:${fromZodError(error).message}`)
           else if (error instanceof Error)
             core.error(error.message)
           else
@@ -71,7 +74,7 @@ async function run(): Promise<void> {
       }
     }
 
-    core.info(`Loaded ${genericFiles.length - genericErrorCount} files.`)
+    core.info(`Loaded ${genericFilePaths.length - genericErrorCount} files.`)
     if (genericErrorCount > 0)
       core.warning(`${genericErrorCount} files was not loaded because of errors.`)
 
