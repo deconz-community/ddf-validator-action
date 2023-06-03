@@ -19,5 +19,5 @@ inputs:
     required: false
     description: 'ignore files that match this pattern'
 runs:
-  using: 'node18'
+  using: 'node16'
   main: 'dist/index.js'
