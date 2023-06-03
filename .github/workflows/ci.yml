@@ -41,7 +41,7 @@ jobs:
           directory: tests
           generic: tests/generic
           search: '**/*.json'
-          ignore: '**/generic/**'
+          ignore: '**/invalid.json'
 
       - name: Create Release Pull Request or Publish
         id: changesets

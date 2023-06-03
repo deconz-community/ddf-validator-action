@@ -1,0 +1,23 @@
+{
+    "schema":"devcap1.schema.json",
+    "manufacturername":"$MF_DE_INVALID",
+    "modelid":"Kobold2",
+    "product":"Kobold2",
+    "sleeper":false,
+    "status":"Gold",
+    "subdevices":[
+        {
+            "type":"$TYPE_DIMMABLE_LIGHT_INVALID",
+            "restapi":"/lights",
+            "uuid":[
+                "$address.ext",
+                "0x01"
+            ],
+            "items":[
+                {
+                    "name":"attr/invalid"
+                }
+            ]
+        }
+    ]
+}
