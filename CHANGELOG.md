@@ -1,5 +1,16 @@
 # @deconz-community/ddf-validator-action
 
+## 1.4.0
+
+### Minor Changes
+
+- b511e39: Update @deconz-community/ddf-validator to 2.4.0
+- 68bf764: Update validator version and deps
+
+### Patch Changes
+
+- 06a9d01: Fix build
+
 ## 1.3.1
 
 ### Patch Changes
