@@ -19,5 +19,4 @@ inputs:
     required: false
     description: 'ignore files that match this pattern'
 runs:
-  using: 'node16'
   main: 'dist/index.js'
