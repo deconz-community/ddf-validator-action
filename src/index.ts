@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises'
 import * as core from '@actions/core'
-import glob from 'glob'
+import { glob } from 'glob'
 import { fromZodError } from 'zod-validation-error'
 import { createValidator } from '@deconz-community/ddf-validator'
 import { ZodError } from 'zod'
