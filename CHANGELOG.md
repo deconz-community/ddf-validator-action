@@ -1,5 +1,15 @@
 # @deconz-community/ddf-validator-action
 
+## 1.5.0
+
+### Minor Changes
+
+- 00549ec: Update deps
+
+### Patch Changes
+
+- 91f8cd3: Fix glob loading
+
 ## 1.4.0
 
 ### Minor Changes
