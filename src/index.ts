@@ -102,12 +102,20 @@ async function run(): Promise<void> {
       }
       catch (error) {
         ddfErrorCount++
-        if (error instanceof ZodError)
-          core.error(`${file}:${fromZodError(error).message}`)
-        else if (error instanceof Error)
+        if (error instanceof ZodError) {
+          core.error(error)
+          core.error(`${file}:${fromZodError(error).message}`, {
+            file,
+
+          })
+        }
+
+        else if (error instanceof Error) {
           core.error(error.message)
-        else
+        }
+        else {
           core.error('Unknown Error')
+        }
       }
     }
 
