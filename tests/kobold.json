@@ -1,5 +1,6 @@
 {
     "schema":"devcap1.schema.json",
+    "$schema": "https://unpkg.com/@deconz-community/ddf-validator/dist/ddf-schema.json",
     "manufacturername":"$MF_DE",
     "modelid":"Kobold",
     "product":"Kobold",

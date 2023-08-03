@@ -1,5 +1,6 @@
 {
 	"schema": "resourceitem1.schema.json",
+	"$schema": "https://unpkg.com/@deconz-community/ddf-validator/dist/ddf-schema.json",
 	"id": "attr/id",
 	"datatype": "String",
 	"access": "R",
