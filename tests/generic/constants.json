@@ -2,8 +2,5 @@
     "schema": "constants1.schema.json",
     "manufacturers" : {
         "$MF_DE": "dresden elektronik"
-    },
-    "device-types": {
-        "$TYPE_DIMMABLE_LIGHT": "Dimmable light"
     }
 }

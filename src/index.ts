@@ -27,6 +27,7 @@ async function run(): Promise<void> {
     // Load and sort files by schema
     const genericfiles: Record<string, { path: string; data: unknown }[]> = {
       'constants1.schema.json': [],
+      'constants2.schema.json': [],
       'resourceitem1.schema.json': [],
       'subdevice1.schema.json': [],
     }
