@@ -114,10 +114,8 @@ async function run(): Promise<void> {
 
           core.startGroup(`Error while parsing ${file}`)
 
-        
-
           for (let i = 0; i < error.issues.length; i++) {
-            const issue = error.issues[i];
+            const issue = error.issues[i]
 
             const path = issue.path.join('/')
 
@@ -160,7 +158,7 @@ async function run(): Promise<void> {
 
             })
             // core.error(issue.path.join('/'))
-          })
+          }
 
           core.endGroup()
 
