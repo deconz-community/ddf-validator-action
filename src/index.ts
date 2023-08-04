@@ -4,6 +4,7 @@ import { glob } from 'glob'
 import { fromZodError } from 'zod-validation-error'
 import { createValidator } from '@deconz-community/ddf-validator'
 import { ZodError } from 'zod'
+import { visit } from 'jsonc-parser'
 
 async function run(): Promise<void> {
   try {
@@ -95,8 +96,9 @@ async function run(): Promise<void> {
     core.info(`Found ${inputFiles.length} files to valiate.`)
 
     for (const file of inputFiles) {
+      let data = ''
       try {
-        const data = await readFile(file, 'utf-8')
+        data = await readFile(file, 'utf-8')
         const decoded = JSON.parse(data)
         validator.validate(decoded)
       }
@@ -106,96 +108,32 @@ async function run(): Promise<void> {
           // Build error list by path
           const errors: Record<string, string[]> = {}
           error.issues.forEach((issue) => {
-            if (Array.isArray(errors[issue.path.join('/')]))
-              errors[issue.path.join('/')].push(issue.message)
-            else
-              errors[issue.path.join('/')] = [issue.message]
-          })
-
-          // core.startGroup(`Error while parsing ${file}`)
-
-          Object.entries(errors).forEach(([path, messages]) => {
-            if (path === 'subdevices/0/items/0/name') {
-              core.error(`Errors in file ${file} at ${path}.`)
-              messages.forEach((message) => {
-                core.error(message, {
-                  file,
-                  startLine: 18 + 1,
-                  // startColumn: 20,
-
-                  // title: issue.message,
-                  // endLine: 18 + 1,
-                  // endColumn: 42,
-
-                })
-              })
-            }
-
-            console.log({ path, errors: messages })
-          })
-
-          for (let i = 0; i < error.issues.length; i++) {
-            const issue = error.issues[i]
-
-            core.error(JSON.stringify(issue))
-
             const path = issue.path.join('/')
-
-            /*
-            if (path !== 'subdevices/0/items/0/name')
-              return
-              */
-            /*
-            core.error(issue.message, {
-              file,
-              startLine: 18 + 1,
-              // startColumn: 20,
-
-              // title: issue.message,
-              // endLine: 18 + 1,
-              // endColumn: 42,
-
-            })
-            */
-
-            /*
-            core.error(`${file}\n${(new ValidationError(issue.message, [issue])).message}`, {
-              file,
-              title: issue.message,
-              startLine: 18 + 1,
-              // startColumn: 20,
-
-              // title: issue.message,
-              // endLine: 18 + 1,
-              // endColumn: 42,
-
-            })
-            */
-
-            /*
-            core.error('An other error', {
-              file,
-              startLine: 18 + 1,
-              // startColumn: 20,
-
-              // title: issue.message,
-              // endLine: 18 + 1,
-              // endColumn: 42,
-
-            })
-            */
-            // core.error(issue.path.join('/'))
-          }
-
-          // core.endGroup()
-
-          // core.error(error)
-          /*
-          core.error(`${file}:${fromZodError(error).message}`, {
-            file,
-
+            if (Array.isArray(errors[path]))
+              errors[path].push(issue.message)
+            else
+              errors[path] = [issue.message]
           })
-          */
+
+          const paths = Object.keys(errors)
+
+          visit(data, {
+            onObjectProperty: (property, offset, length, startLine, startCharacter, pathSupplier) => {
+              const path = [...pathSupplier(), property].join('/')
+              const index = paths.indexOf(path)
+              if (index > -1) {
+                core.error(`${errors[path].length} validation error${errors[path].length > 1 ? 's' : ''} in file ${file} at ${path}`)
+                errors[path].forEach((message) => {
+                  core.error(message, {
+                    file,
+                    startLine: startLine + 1,
+                    startColumn: startCharacter,
+                  })
+                })
+                paths.splice(index, 1)
+              }
+            },
+          })
         }
 
         else if (error instanceof Error) {
