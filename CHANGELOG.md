@@ -1,5 +1,13 @@
 # @deconz-community/ddf-validator-action
 
+## 1.6.0
+
+### Minor Changes
+
+- 285b57f: Update deps
+- 3cf4825: Display errors on file diff
+- 7eecb6c: Add support for constants2 schema
+
 ## 1.5.0
 
 ### Minor Changes
