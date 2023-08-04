@@ -113,9 +113,9 @@ async function run(): Promise<void> {
               file,
               startLine: 18 + 1,
               startColumn: 20,
-              title: issue.message,
-              endLine: 18 + 1,
-              endColumn: 42,
+              // title: issue.message,
+              // endLine: 18 + 1,
+              // endColumn: 42,
 
             })
             // core.error(issue.path.join('/'))
