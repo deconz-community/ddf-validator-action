@@ -112,7 +112,8 @@ async function run(): Promise<void> {
             core.error(issue.message, {
               file,
               startLine: 18 + 1,
-              startColumn: 20,
+              // startColumn: 20,
+
               // title: issue.message,
               // endLine: 18 + 1,
               // endColumn: 42,
