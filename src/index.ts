@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import * as core from '@actions/core'
 import { glob } from 'glob'
-import { fromZodError } from 'zod-validation-error'
+import { ValidationError, fromZodError } from 'zod-validation-error'
 import { createValidator } from '@deconz-community/ddf-validator'
 import { ZodError } from 'zod'
 
@@ -133,9 +133,7 @@ async function run(): Promise<void> {
 
             })
 
-            const clone = structuredClone(error)
-            clone.issues = [issue]
-            core.error(`${file}\n${fromZodError(clone).message}`, {
+            core.error(`${file}\n${(new ValidationError(issue.message, [issue])).message}`, {
               file,
               title: issue.message,
               startLine: 18 + 1,
