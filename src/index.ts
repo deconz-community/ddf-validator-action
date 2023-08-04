@@ -121,8 +121,10 @@ async function run(): Promise<void> {
 
             const path = issue.path.join('/')
 
+            /*
             if (path !== 'subdevices/0/items/0/name')
               return
+              */
 
             core.error(issue.message, {
               file,
