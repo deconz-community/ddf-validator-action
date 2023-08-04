@@ -117,6 +117,8 @@ async function run(): Promise<void> {
           for (let i = 0; i < error.issues.length; i++) {
             const issue = error.issues[i]
 
+            core.error(JSON.stringify(issue))
+
             const path = issue.path.join('/')
 
             if (path !== 'subdevices/0/items/0/name')
