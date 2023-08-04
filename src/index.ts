@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import * as core from '@actions/core'
 import { glob } from 'glob'
-import { ValidationError, fromZodError } from 'zod-validation-error'
+import { fromZodError } from 'zod-validation-error'
 import { createValidator } from '@deconz-community/ddf-validator'
 import { ZodError } from 'zod'
 
@@ -114,6 +114,26 @@ async function run(): Promise<void> {
 
           // core.startGroup(`Error while parsing ${file}`)
 
+          Object.entries(errors).forEach(([path, messages]) => {
+            if (path === 'subdevices/0/items/0/name') {
+              core.error(`Errors in file ${file} at ${path}.`)
+              messages.forEach((message) => {
+                core.error(message, {
+                  file,
+                  startLine: 18 + 1,
+                  // startColumn: 20,
+
+                  // title: issue.message,
+                  // endLine: 18 + 1,
+                  // endColumn: 42,
+
+                })
+              })
+            }
+
+            console.log({ path, errors: messages })
+          })
+
           for (let i = 0; i < error.issues.length; i++) {
             const issue = error.issues[i]
 
@@ -137,9 +157,6 @@ async function run(): Promise<void> {
 
             })
             */
-
-            const message = (new ValidationError(issue.message, [issue])).message
-            core.error(`::error file=${file},line=${18 + 1}::${message}`)
 
             /*
             core.error(`${file}\n${(new ValidationError(issue.message, [issue])).message}`, {
