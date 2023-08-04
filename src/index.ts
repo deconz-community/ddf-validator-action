@@ -5,7 +5,7 @@ import { createValidator } from '@deconz-community/ddf-validator'
 import { ZodError } from 'zod'
 import { visit } from 'jsonc-parser'
 
-function handleError(error: ZodError | Error | unknown, filePath: string, data: string) {
+function handleError(error: ZodError | Error | unknown, file: string, data: string) {
   if (error instanceof ZodError) {
     // Build error list by path
     const errors: Record<string, string[]> = {}
@@ -24,10 +24,10 @@ function handleError(error: ZodError | Error | unknown, filePath: string, data: 
         const path = [...pathSupplier(), property].join('/')
         const index = paths.indexOf(path)
         if (index > -1) {
-          core.error(`${errors[path].length} validation error${errors[path].length > 1 ? 's' : ''} in file ${filePath} at ${path}`)
+          core.error(`${errors[path].length} validation error${errors[path].length > 1 ? 's' : ''} in file ${file} at ${path}`)
           errors[path].forEach((message) => {
             core.error(message, {
-              file: filePath,
+              file,
               startLine: startLine + 1,
               startColumn: startCharacter,
             })
@@ -36,10 +36,21 @@ function handleError(error: ZodError | Error | unknown, filePath: string, data: 
         }
       },
     })
+
+    if (paths.length > 0) {
+      paths.forEach((path) => {
+        core.error(`${errors[path].length} validation error${errors[path].length > 1 ? 's' : ''} in file ${file} at ${path}`)
+        errors[path].forEach((message) => {
+          core.error(message, {
+            file,
+          })
+        })
+      })
+    }
   }
   else if (error instanceof Error) {
     core.error(error.message, {
-      file: filePath,
+      file,
     })
   }
   else {
