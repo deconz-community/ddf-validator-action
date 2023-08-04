@@ -114,7 +114,11 @@ async function run(): Promise<void> {
 
           core.startGroup(`Error while parsing ${file}`)
 
-          error.issues.forEach((issue) => {
+        
+
+          for (let i = 0; i < error.issues.length; i++) {
+            const issue = error.issues[i];
+
             const path = issue.path.join('/')
 
             if (path !== 'subdevices/0/items/0/name')
@@ -131,7 +135,9 @@ async function run(): Promise<void> {
 
             })
 
-            core.error('', {
+            const clone = structuredClone(error)
+            clone.issues = [issue]
+            core.error(`${file}\n${fromZodError(clone).message}`, {
               file,
               title: issue.message,
               startLine: 18 + 1,
