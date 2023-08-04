@@ -125,7 +125,7 @@ async function run(): Promise<void> {
             if (path !== 'subdevices/0/items/0/name')
               return
               */
-
+            /*
             core.error(issue.message, {
               file,
               startLine: 18 + 1,
@@ -136,7 +136,12 @@ async function run(): Promise<void> {
               // endColumn: 42,
 
             })
+            */
 
+            const message = (new ValidationError(issue.message, [issue])).message
+            core.error(`::error file=${file},line=${18 + 1}::${message}`)
+
+            /*
             core.error(`${file}\n${(new ValidationError(issue.message, [issue])).message}`, {
               file,
               title: issue.message,
@@ -148,7 +153,9 @@ async function run(): Promise<void> {
               // endColumn: 42,
 
             })
+            */
 
+            /*
             core.error('An other error', {
               file,
               startLine: 18 + 1,
@@ -159,6 +166,7 @@ async function run(): Promise<void> {
               // endColumn: 42,
 
             })
+            */
             // core.error(issue.path.join('/'))
           }
 
