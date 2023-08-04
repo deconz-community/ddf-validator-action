@@ -103,11 +103,31 @@ async function run(): Promise<void> {
       catch (error) {
         ddfErrorCount++
         if (error instanceof ZodError) {
-          core.error(error)
+          error.issues.forEach((issue) => {
+            const path = issue.path.join('/')
+
+            if (path !== 'subdevices/0/items/0/name')
+              return
+
+            core.error(issue.message, {
+              file,
+              startLine: 18 + 1,
+              startColumn: 20,
+              title: issue.message,
+              endLine: 18 + 1,
+              endColumn: 42,
+
+            })
+            // core.error(issue.path.join('/'))
+          })
+
+          // core.error(error)
+          /*
           core.error(`${file}:${fromZodError(error).message}`, {
             file,
 
           })
+          */
         }
 
         else if (error instanceof Error) {
