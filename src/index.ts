@@ -103,6 +103,17 @@ async function run(): Promise<void> {
       catch (error) {
         ddfErrorCount++
         if (error instanceof ZodError) {
+          // Build error list by path
+          const errors: Record<string, string[]> = {}
+          error.issues.forEach((issue) => {
+            if (Array.isArray(errors[issue.path.join('/')]))
+              errors[issue.path.join('/')].push(issue.message)
+            else
+              errors[issue.path.join('/')] = [issue.message]
+          })
+
+          core.startGroup(`Error while parsing ${file}`)
+
           error.issues.forEach((issue) => {
             const path = issue.path.join('/')
 
@@ -119,8 +130,20 @@ async function run(): Promise<void> {
               // endColumn: 42,
 
             })
+            core.error('An other error', {
+              file,
+              startLine: 18 + 1,
+              // startColumn: 20,
+
+              // title: issue.message,
+              // endLine: 18 + 1,
+              // endColumn: 42,
+
+            })
             // core.error(issue.path.join('/'))
           })
+
+          core.endGroup()
 
           // core.error(error)
           /*
