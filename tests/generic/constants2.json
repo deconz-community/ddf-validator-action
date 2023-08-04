@@ -1,5 +1,6 @@
 {
     "schema": "constants2.schema.json",
     "$schema": "https://unpkg.com/@deconz-community/ddf-validator/dist/ddf-schema.json",
-    "$TYPE_DIMMABLE_LIGHT": "Dimmable light"
+    "$TYPE_DIMMABLE_LIGHT": "Dimmable light",
+    "foo": "bar"
 }

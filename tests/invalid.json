@@ -1,14 +1,14 @@
 {
     "schema":"devcap1.schema.json",
     "$schema": "https://unpkg.com/@deconz-community/ddf-validator/dist/ddf-schema.json",
-    "manufacturername":"$MF_DE.INVALID",
+    "manufacturername":"$MF_DE_INVALID",
     "modelid":"Kobold2",
     "product":"Kobold2",
     "sleeper":false,
     "status":"Gold",
     "subdevices":[
         {
-            "type":"$TYPE_DIMMABLE/LIGHT_INVALID",
+            "type":"$TYPE_DIMMABLE_LIGHT_INVALID",
             "restapi":"/lights",
             "uuid":[
                 "$address.ext",
@@ -16,7 +16,7 @@
             ],
             "items":[
                 {
-                    "name":"attr_invalid"
+                    "name":"attr/invalid"
                 }
             ]
         }

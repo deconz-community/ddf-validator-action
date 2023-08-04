@@ -1,10 +1,51 @@
 import { readFile } from 'node:fs/promises'
 import * as core from '@actions/core'
 import { glob } from 'glob'
-import { fromZodError } from 'zod-validation-error'
 import { createValidator } from '@deconz-community/ddf-validator'
 import { ZodError } from 'zod'
 import { visit } from 'jsonc-parser'
+
+function handleError(error: ZodError | Error | unknown, filePath: string, data: string) {
+  if (error instanceof ZodError) {
+    // Build error list by path
+    const errors: Record<string, string[]> = {}
+    error.issues.forEach((issue) => {
+      const path = issue.path.join('/')
+      if (Array.isArray(errors[path]))
+        errors[path].push(issue.message)
+      else
+        errors[path] = [issue.message]
+    })
+
+    const paths = Object.keys(errors)
+
+    visit(data, {
+      onObjectProperty: (property, offset, length, startLine, startCharacter, pathSupplier) => {
+        const path = [...pathSupplier(), property].join('/')
+        const index = paths.indexOf(path)
+        if (index > -1) {
+          core.error(`${errors[path].length} validation error${errors[path].length > 1 ? 's' : ''} in file ${filePath} at ${path}`)
+          errors[path].forEach((message) => {
+            core.error(message, {
+              file: filePath,
+              startLine: startLine + 1,
+              startColumn: startCharacter,
+            })
+          })
+          paths.splice(index, 1)
+        }
+      },
+    })
+  }
+  else if (error instanceof Error) {
+    core.error(error.message, {
+      file: filePath,
+    })
+  }
+  else {
+    core.error('Unknown Error')
+  }
+}
 
 async function run(): Promise<void> {
   try {
@@ -26,7 +67,7 @@ async function run(): Promise<void> {
     core.debug(`Found ${genericFilePaths.length} files.`)
 
     // Load and sort files by schema
-    const genericfiles: Record<string, { path: string; data: unknown }[]> = {
+    const genericfiles: Record<string, { path: string; raw: string; data: unknown }[]> = {
       'constants1.schema.json': [],
       'constants2.schema.json': [],
       'resourceitem1.schema.json': [],
@@ -41,6 +82,7 @@ async function run(): Promise<void> {
         if (typeof decoded.schema === 'string' || genericfiles[decoded.schema] === undefined) {
           genericfiles[decoded.schema].push({
             path: filePath,
+            raw: data,
             data: decoded,
           })
         }
@@ -66,12 +108,7 @@ async function run(): Promise<void> {
         }
         catch (error) {
           genericErrorCount++
-          if (error instanceof ZodError)
-            core.error(`${file.path}:${fromZodError(error).message}`)
-          else if (error instanceof Error)
-            core.error(error.message)
-          else
-            core.error('Unknown Error')
+          handleError(error, file.path, file.raw)
         }
       }
     }
@@ -104,44 +141,7 @@ async function run(): Promise<void> {
       }
       catch (error) {
         ddfErrorCount++
-        if (error instanceof ZodError) {
-          // Build error list by path
-          const errors: Record<string, string[]> = {}
-          error.issues.forEach((issue) => {
-            const path = issue.path.join('/')
-            if (Array.isArray(errors[path]))
-              errors[path].push(issue.message)
-            else
-              errors[path] = [issue.message]
-          })
-
-          const paths = Object.keys(errors)
-
-          visit(data, {
-            onObjectProperty: (property, offset, length, startLine, startCharacter, pathSupplier) => {
-              const path = [...pathSupplier(), property].join('/')
-              const index = paths.indexOf(path)
-              if (index > -1) {
-                core.error(`${errors[path].length} validation error${errors[path].length > 1 ? 's' : ''} in file ${file} at ${path}`)
-                errors[path].forEach((message) => {
-                  core.error(message, {
-                    file,
-                    startLine: startLine + 1,
-                    startColumn: startCharacter,
-                  })
-                })
-                paths.splice(index, 1)
-              }
-            },
-          })
-        }
-
-        else if (error instanceof Error) {
-          core.error(error.message)
-        }
-        else {
-          core.error('Unknown Error')
-        }
+        handleError(error, file, data)
       }
     }
 
