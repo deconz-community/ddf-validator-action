@@ -130,6 +130,19 @@ async function run(): Promise<void> {
               // endColumn: 42,
 
             })
+
+            core.error('', {
+              file,
+              title: issue.message,
+              startLine: 18 + 1,
+              // startColumn: 20,
+
+              // title: issue.message,
+              // endLine: 18 + 1,
+              // endColumn: 42,
+
+            })
+
             core.error('An other error', {
               file,
               startLine: 18 + 1,
