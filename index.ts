@@ -21,8 +21,8 @@ function handleError(error: ZodError | Error | unknown, file: string, data: stri
     const paths = Object.keys(errors)
 
     visit(data, {
-      onObjectProperty: (property, offset, length, startLine, startCharacter, pathSupplier) => {
-        const path = [...pathSupplier(), property].join('/')
+      onLiteralValue: (value: any, offset: number, length: number, startLine: number, startCharacter: number, pathSupplier) => {
+        const path = pathSupplier().join('/')
         const index = paths.indexOf(path)
         if (index > -1) {
           core.error(`${errors[path].length} validation error${errors[path].length > 1 ? 's' : ''} in file ${file} at ${path}`)
