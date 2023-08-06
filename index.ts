@@ -4,7 +4,7 @@ import { glob } from 'glob'
 import { createValidator } from '@deconz-community/ddf-validator'
 import { ZodError } from 'zod'
 import { visit } from 'jsonc-parser'
-import { version } from '../package.json'
+import { version } from './package.json'
 
 function handleError(error: ZodError | Error | unknown, file: string, data: string) {
   if (error instanceof ZodError) {
