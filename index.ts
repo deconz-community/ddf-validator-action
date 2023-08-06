@@ -29,7 +29,7 @@ function handleError(error: ZodError | Error | unknown, file: string, data: stri
           errors[path].forEach((message) => {
             core.error(message, {
               file,
-              startLine: startLine + 1,
+              startLine,
               startColumn: startCharacter,
             })
           })
