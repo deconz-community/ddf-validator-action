@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.7.0
+
+### Minor Changes
+
+- 67e18c9: Display version of validator in log
+
 ## 1.6.0
 
 ### Minor Changes
