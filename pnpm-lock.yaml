@@ -9,8 +9,8 @@ dependencies:
     specifier: ^1.10.0
     version: 1.10.0
   '@deconz-community/ddf-validator':
-    specifier: ^2.11.0
-    version: 2.11.0
+    specifier: ^2.12.1
+    version: 2.12.1
   glob:
     specifier: ^10.3.3
     version: 10.3.3
@@ -29,8 +29,8 @@ devDependencies:
     specifier: ^2.26.2
     version: 2.26.2
   '@types/node':
-    specifier: ^20.4.7
-    version: 20.4.7
+    specifier: ^20.4.8
+    version: 20.4.8
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.2.1
     version: 6.2.1(@typescript-eslint/parser@6.2.1)(eslint@8.46.0)(typescript@5.1.6)
@@ -398,8 +398,8 @@ packages:
       prettier: 2.8.8
     dev: true
 
-  /@deconz-community/ddf-validator@2.11.0:
-    resolution: {integrity: sha512-pPWGLRHt3nN+UeyKaCKH52EtUoTfNMHL3Diz5FvBuOhK1TU4qOcl6M+MeZuYKOu/mboHU5qfgHdSo8YAjAMcyA==}
+  /@deconz-community/ddf-validator@2.12.1:
+    resolution: {integrity: sha512-4Pj1OgDnAzXRn60s37qekh6ELb02tH2gA4XfnJsVqQy4XrPuJHUEbt7SSSx0QGkhjOvjjWmAR+1zDcwYdm7VFA==}
     engines: {node: '>=16.0.0', pnpm: '>=8.6.8'}
     dependencies:
       zod: 3.21.4
@@ -710,8 +710,8 @@ packages:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
     dev: true
 
-  /@types/node@20.4.7:
-    resolution: {integrity: sha512-bUBrPjEry2QUTsnuEjzjbS7voGWCc30W0qzgMf90GPeDGFRakvrz47ju+oqDAKCXLUCe39u57/ORMl/O/04/9g==}
+  /@types/node@20.4.8:
+    resolution: {integrity: sha512-0mHckf6D2DiIAzh8fM8f3HQCvMKDpK94YQ0DSVkfWTG9BZleYIWudw9cJxX8oCk9bM+vAkDyujDV6dmKHbvQpg==}
     dev: true
 
   /@types/normalize-package-data@2.4.1:
@@ -1753,7 +1753,7 @@ packages:
     dependencies:
       debug: 3.2.7
       is-core-module: 2.12.1
-      resolve: 1.22.2
+      resolve: 1.22.3
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1933,7 +1933,7 @@ packages:
       is-glob: 4.0.3
       minimatch: 3.1.2
       object.values: 1.1.6
-      resolve: 1.22.2
+      resolve: 1.22.3
       semver: 6.3.0
       tsconfig-paths: 3.14.2
     transitivePeerDependencies:
@@ -3590,7 +3590,7 @@ packages:
     resolution: {integrity: sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==}
     dependencies:
       hosted-git-info: 2.8.9
-      resolve: 1.22.2
+      resolve: 1.22.3
       semver: 5.7.1
       validate-npm-package-license: 3.0.4
     dev: true
