@@ -1,5 +1,12 @@
 # @deconz-community/ddf-validator-action
 
+## 1.7.1
+
+### Patch Changes
+
+- d35f037: Remove line offset, the error message will be before the related line
+- 18ae49a: Fixed line number error for arrays
+
 ## 1.7.0
 
 ### Minor Changes
