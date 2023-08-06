@@ -1,8 +1,0 @@
-{
-    "schema": "constants1.schema.json",
-    "$schema": "https://unpkg.com/@deconz-community/ddf-validator/dist/ddf-schema.json",
-    "manufacturers" : {
-        "$MF_DE": "dresden elektronik"
-    },
-    "device-types" : {}
-}
