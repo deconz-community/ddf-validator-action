@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.8.0
+
+### Minor Changes
+
+- 7c07c41: Update deps
+
 ## 1.7.1
 
 ### Patch Changes
