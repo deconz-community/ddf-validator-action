@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.8.1
+
+### Patch Changes
+
+- eeee01b: Update ddf-validator from 2.15.0 to 2.18.0
+
 ## 1.8.0
 
 ### Minor Changes
