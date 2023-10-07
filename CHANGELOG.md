@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.8.2
+
+### Patch Changes
+
+- 824ce67: Update validator to 2.19.0
+
 ## 1.8.1
 
 ### Patch Changes
