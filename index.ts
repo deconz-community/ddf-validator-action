@@ -93,6 +93,12 @@ async function run(): Promise<void> {
       try {
         const data = await readFile(filePath, 'utf-8')
         const decoded = JSON.parse(data)
+
+        if ('ddfvalidate' in decoded && decoded.ddfvalidate === false) {
+          core.info(`Skipping file ${filePath} because it has the ddfvalidate option set to false`)
+          break
+        }
+
         if (typeof decoded.schema === 'string' || genericfiles[decoded.schema] === undefined) {
           genericfiles[decoded.schema].push({
             path: filePath,
@@ -146,16 +152,22 @@ async function run(): Promise<void> {
 
     core.info(`Found ${inputFiles.length} files to valiate.`)
 
-    for (const file of inputFiles) {
+    for (const filePath of inputFiles) {
       let data = ''
       try {
-        data = await readFile(file, 'utf-8')
+        data = await readFile(filePath, 'utf-8')
         const decoded = JSON.parse(data)
+
+        if ('ddfvalidate' in decoded && decoded.ddfvalidate === false) {
+          core.info(`Skipping file ${filePath} because it has the ddfvalidate option set to false`)
+          break
+        }
+
         validator.validate(decoded)
       }
       catch (error) {
         ddfErrorCount++
-        handleError(error, file, data)
+        handleError(error, filePath, data)
       }
     }
 
