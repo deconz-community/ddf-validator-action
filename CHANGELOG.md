@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.10.0
+
+### Minor Changes
+
+- f9c7d87: Add more logs
+
 ## 1.9.0
 
 ### Minor Changes
