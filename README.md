@@ -23,5 +23,6 @@ jobs:
           directory: devices
           generic: devices/generic
           search: '**/*.json'
-          ignore: '**/generic/**'
+          # ignore: '**/generic/**'
+          # no-skip: false
 ```

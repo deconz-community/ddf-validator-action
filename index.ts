@@ -71,6 +71,8 @@ async function run(): Promise<void> {
       ? `${core.getInput('generic')}/${core.getInput('search')}`
       : `${core.getInput('directory')}/generic/${core.getInput('search')}`
 
+    const skip = !core.getBooleanInput('no-skip')
+
     core.info(`Loading generic files from ${genericDirectory}`)
 
     const genericFilePaths = await glob(genericDirectory)
@@ -94,7 +96,7 @@ async function run(): Promise<void> {
         const data = await readFile(filePath, 'utf-8')
         const decoded = JSON.parse(data)
 
-        if ('ddfvalidate' in decoded && decoded.ddfvalidate === false) {
+        if (skip && 'ddfvalidate' in decoded && decoded.ddfvalidate === false) {
           core.info(`Skipping file ${filePath} because it has the ddfvalidate option set to false`)
           break
         }
@@ -158,7 +160,7 @@ async function run(): Promise<void> {
         data = await readFile(filePath, 'utf-8')
         const decoded = JSON.parse(data)
 
-        if ('ddfvalidate' in decoded && decoded.ddfvalidate === false) {
+        if (skip && 'ddfvalidate' in decoded && decoded.ddfvalidate === false) {
           core.info(`Skipping file ${filePath} because it has the ddfvalidate option set to false`)
           break
         }

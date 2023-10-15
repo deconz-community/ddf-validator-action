@@ -18,6 +18,10 @@ inputs:
   ignore:
     required: false
     description: 'ignore files that match this pattern'
+  no-skip:
+    required: false
+    description: 'Validate all files even if they have the ddfvalidate option to false'
+    default: false
 runs:
   using: 'node16'
   main: 'dist/index.js'
