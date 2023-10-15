@@ -7,6 +7,13 @@ Validate DDF files in a directory.
 ```yaml
 name: build-test
 on: # rebuild any PRs and main branch changes
+  workflow_dispatch:
+    inputs:
+      noSkip:
+        description: Don't skip files when validating
+        required: true
+        default: true
+        type: boolean
   pull_request:
   push:
     branches:
@@ -24,5 +31,5 @@ jobs:
           generic: devices/generic
           search: '**/*.json'
           # ignore: '**/generic/**'
-          # no-skip: false
+          no-skip: ${{ inputs.noSkip == true }}
 ```
