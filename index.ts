@@ -99,7 +99,7 @@ async function run(): Promise<void> {
 
         if (skip && 'ddfvalidate' in decoded && decoded.ddfvalidate === false) {
           core.info(`Skipping file ${filePath} because it has the ddfvalidate option set to false`)
-          break
+          continue
         }
 
         if (typeof decoded.schema === 'string' || genericfiles[decoded.schema] === undefined) {
@@ -164,7 +164,7 @@ async function run(): Promise<void> {
 
         if (skip && 'ddfvalidate' in decoded && decoded.ddfvalidate === false) {
           core.info(`Skipping file ${filePath} because it has the ddfvalidate option set to false`)
-          break
+          continue
         }
 
         validator.validate(decoded)
