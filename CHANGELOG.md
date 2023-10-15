@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.10.1
+
+### Patch Changes
+
+- 0716d87: Fix ddfvalidate skiping all files
+
 ## 1.10.0
 
 ### Minor Changes
