@@ -74,6 +74,7 @@ async function run(): Promise<void> {
     const skip = !core.getBooleanInput('no-skip')
 
     core.info(`Loading generic files from ${genericDirectory}`)
+    core.info(`Skipping files option = ${skip}`)
 
     const genericFilePaths = await glob(genericDirectory)
 
@@ -143,7 +144,8 @@ async function run(): Promise<void> {
     let ddfErrorCount = 0
     const ddfDirectory = `${core.getInput('directory')}/${core.getInput('search')}`
 
-    core.info(`Validating DDF files from ${ddfDirectory} (ignore: ${core.getInput('ignore')})`)
+    const ignoreLog = core.getInput('ignore') ? ` (ignore: ${core.getInput('ignore')})` : ''
+    core.info(`Validating DDF files from ${ddfDirectory}${ignoreLog}`)
 
     const inputFiles = await glob(ddfDirectory, {
       ignore: core.getInput('ignore'),
