@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.9.0
+
+### Minor Changes
+
+- c89c056: Add support for ddfvalidate option
+
 ## 1.8.2
 
 ### Patch Changes
