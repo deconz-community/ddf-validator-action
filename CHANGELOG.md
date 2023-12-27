@@ -1,5 +1,11 @@
 # @deconz-community/ddf-validator-action
 
+## 1.12.0
+
+### Minor Changes
+
+- f8bb836: Update validator to 2.26.0
+
 ## 1.11.0
 
 ### Minor Changes
