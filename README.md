@@ -2,6 +2,9 @@
 
 Validate DDF files in a directory.
 
+> [!IMPORTANT]
+> This action is now deprecated, please use [deconz-community/ddf-tools-action](https://github.com/deconz-community/ddf-tools-action) now.
+
 ## Usage:
 
 ```yaml
